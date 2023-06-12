@@ -1,0 +1,103 @@
+﻿@page
+@model AshWeb.Pages.Admin.MenuItems.UpdInsModel
+@{
+}
+
+
+<form method="post" enctype="multipart/form-data">
+    <input asp-for="MenuItems.id" hidden />
+    <div class="border border-3 rounded-3 border-secondary col-6 offset-3 mt-5 mb-5 pt-2 pb-2 p-4">
+       
+        <div class="row">
+            <div class="col-9">
+
+
+                <h2 class="text-primary">
+                    @(Model.MenuItems.id != 0 ? "Update" : "Create") Menu Item
+                </h2>
+                <hr />
+
+                <div class="form-group pb-2">
+                    <label asp-for="MenuItems.Name"></label>
+                    <input asp-for="MenuItems.Name" class="form-control" autocomplete="off" />
+                    <span asp-validation-for="MenuItems.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group pb-2">
+                    <label asp-for="MenuItems.Description"></label>
+                    <textarea asp-for="MenuItems.Description" class="form-control" autocomplete="off"></textarea>
+                    <span asp-validation-for="MenuItems.Description" class="text-danger"></span>
+                </div>
+                <div class="form-group pb-2">
+                    <label asp-for="MenuItems.Price"></label>
+                    <input asp-for="MenuItems.Price" class="form-control" autocomplete="off" />
+                    <span asp-validation-for="MenuItems.Price" class="text-danger"></span>
+                </div>
+                <div class="form-group pb-2">
+                    <label asp-for="MenuItems.Image"></label>
+                    <input type="file" id="uploadbox" class="form-control" autocomplete="off" />
+                </div>
+                <div class="form-group pb-2">
+                    <label asp-for="MenuItems.Categoryid"></label>
+                    <select asp-for="MenuItems.Categoryid" asp-items="Model.CategoryList" class="form-control">
+                        <option disabled selected>--Selected Category--</option>
+                    </select>
+                    <span asp-validation-for="MenuItems.Description" class="text-danger"></span>
+                </div>
+                <div class="form-group pb-2">
+                    <label asp-for="MenuItems.Foodid"></label>
+                    <select asp-for="MenuItems.Foodid" asp-items="Model.FoodList" class="form-control">
+                        <option disabled selected>--Selected Food Type--</option>
+                    </select>
+                    <span asp-validation-for="MenuItems.Description" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-3">
+                @if(Model.MenuItems.id != 0)
+                {
+                    <img src="@Model.MenuItems.Image" width="100%" style="border-radius:5px; border:1px solid #bbb9b9"/>
+                }
+            </div>
+        </div>
+        @if (Model.MenuItems.id != 0)
+        {
+            <button type="submit" class="btn btn-primary">Update</button>
+        }
+        else
+        {
+            <button onclick="return ValidateInput()" type="submit" class="btn btn-primary">Create</button>
+        }
+
+            <a asp-page="Index" class="btn btn-info"><i class="bi bi-skip-backward-circle-fill"></i> Back to List</a>
+    </div>
+</form>
+
+@section Scripts{
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+            tinycomments_mode: 'embedded',
+            tinycomments_author: 'Author name',
+            mergetags_list: [
+                { value: 'First.Name', title: 'First Name' },
+                { value: 'Email', title: 'Email' },
+            ]
+        });
+
+        function ValidateInput(){
+            if(document.getElementById("uploadbox").value == "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops ...',
+                    text: 'Please upload an!',
+                });
+            }
+        }
+
+    </script>
+
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+        }

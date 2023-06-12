@@ -1,0 +1,40 @@
+﻿@page
+@model AshWeb.Pages.Admin.Foods.IndexModel;
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-4 offset-1">
+            <h2 class="text-primary">Foods List</h2>
+        </div>
+        <div class="col-4 offset-1">
+            <a asp-page="Create" class="btn btn-primary float-end"><i class="bi bi-plus-circle"></i> Create New Category</a>
+        </div>
+    </div>
+</div>
+
+<br />
+<br />
+
+<div class="row">
+    <div class="col-8 offset-2">
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr class="text-info text-center ">
+            <th class="w-25">Food Name</th>
+            <th class="w-50">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+                @foreach (var item in Model.Foods)
+        {
+            <tr class="text-center">
+                <td class="m-5">@item.Name</td>
+                <td><a asp-route-id="@item.id" asp-page="Edit" class="btn btn-info"><i class="bi bi-pencil-square"></i> Edit</a> <a asp-page="Delete" asp-route-id="@item.id" class="btn btn-danger"><i class="bi bi-trash-fill"></i> Delete</a> <a asp-page="Details" asp-route-id="@item.id" class="btn btn-warning"><i class="bi bi-ticket-detailed"></i> Details</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>
+</div>
